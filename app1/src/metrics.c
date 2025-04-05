@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h> // Para INT_MAX
+#include <float.h>  // Para FLT_MAX
 #include "include/metrics.h"
 
 // Definición de la estructura 'order'

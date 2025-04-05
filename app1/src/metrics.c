@@ -28,37 +28,8 @@ char* pms(int *size, struct order *orders) {
 }
 
 ####
-char* dls(int *size, struct order *orders) {
-    // Sumar las ventas por fecha
-    float min_sales = FLT_MAX;
-    char* min_sales_date = NULL;
-    for (int i = 0; i < *size; ++i) {
-        float sales = 0.0f;
-        for (int j = 0; j < *size; ++j) {
-            if (strcmp(orders[i].order_date, orders[j].order_date) == 0) {
-                sales += orders[j].total_price;
-            }
-        }
-        if (sales < min_sales) {
-            min_sales = sales;
-            min_sales_date = orders[i].order_date;
-        }
-    }
 
-    // Verificar si se encontró alguna fecha con ventas
-    if (min_sales_date == NULL) {
-        return strdup("No se encontraron ventas.");
-    }
-
-    // Reservar memoria para el resultado y formatear la cadena de salida
-    char *result = malloc(64);
-    if (result == NULL) {
-        // Manejar el error de asignación de memoria
-        return NULL;
-    }
-    snprintf(result, 64, "Fecha con menos ventas: %s", min_sales_date);
-    return result;
-}
+#pls: Pizza menos vendida
 
 ####
 char* dms(int *size, struct order *orders) {
@@ -96,7 +67,8 @@ char* dms(int *size, struct order *orders) {
     return result;
 }
 
-// Función de utilidad para encontrar la fecha con menos ventas en términos de dinero
+####
+
 char* dls(int *size, struct order *orders) {
     // Sumar las ventas por fecha
     float min_sales = FLT_MAX;
@@ -104,20 +76,35 @@ char* dls(int *size, struct order *orders) {
     for (int i = 0; i < *size; ++i) {
         float sales = 0.0f;
         for (int j = 0; j < *size; ++j) {
+            // Comparar las fechas de las órdenes
             if (strcmp(orders[i].order_date, orders[j].order_date) == 0) {
+                // Sumar el precio total de las órdenes con la misma fecha
                 sales += orders[j].total_price;
             }
         }
+        // Actualizar la fecha con menos ventas si las ventas actuales son menores que el mínimo registrado
         if (sales < min_sales) {
             min_sales = sales;
             min_sales_date = orders[i].order_date;
         }
     }
+
+    // Verificar si se encontró alguna fecha con ventas
+    if (min_sales_date == NULL) {
+        return strdup("No se encontraron ventas.");
+    }
+
+    // Reservar memoria para el resultado y formatear la cadena de salida
     char *result = malloc(64);
+    if (result == NULL) {
+        // Manejar el error de asignación de memoria
+        return NULL;
+    }
     snprintf(result, 64, "Fecha con menos ventas: %s", min_sales_date);
     return result;
 }
 
+####
 // Función de utilidad para encontrar la fecha con más ventas en términos de cantidad de pizzas
 char* dmsp(int *size, struct order *orders) {
     // Contar la cantidad total de pizzas vendidas por fecha

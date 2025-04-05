@@ -5,22 +5,6 @@
 #include <float.h>  // Para FLT_MAX
 #include "include/metrics.h"
 
-// Definición de la estructura 'order'
-struct order {
-    int pizza_id;
-    int order_id;
-    char pizza_name_id[50];
-    int quantity;
-    char order_date[20];
-    char order_time[20];
-    float unit_price;
-    float total_price;
-    char pizza_size[5];
-    char pizza_category[20];
-    char pizza_ingredients[100];
-    char pizza_name[100];
-};
-
 // Función de utilidad para encontrar la pizza más vendida
 char* pms(int *size, struct order *orders) {
     // Contar la frecuencia de cada tipo de pizza

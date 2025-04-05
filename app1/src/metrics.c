@@ -41,6 +41,7 @@ char* pls(int *size, struct order *orders) {
                 count += orders[j].quantity;
             }
         }
+        printf("Pizza: %s, Cantidad: %d\n", orders[i].pizza_name, count); // Debugging line
         if (count < min_count) {
             min_count = count;
             least_sold_pizza = orders[i].pizza_name;

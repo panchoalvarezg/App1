@@ -10,22 +10,29 @@ struct order* read_csv(const char* filename, int* size) {
         return NULL;
     }
 
-    // Suponemos que el archivo tiene un máximo de 1000 líneas
     int capacity = 1000;
     struct order* orders = malloc(sizeof(struct order) * capacity);
     *size = 0;
 
     char line[1024];
+
+    // Saltar encabezado
+    fgets(line, sizeof(line), file);
+
     while (fgets(line, sizeof(line), file)) {
         if (*size >= capacity) {
             capacity *= 2;
             orders = realloc(orders, sizeof(struct order) * capacity);
         }
 
-        struct order o;
+        struct order o = {0}; // Inicializar la orden
         char* token = strtok(line, ",");
         int field = 0;
-        while (token) {
+
+        while (token && field < 12) {
+            // Quitar salto de línea si existe
+            token[strcspn(token, "\r\n")] = 0;
+
             switch (field) {
                 case 0: o.pizza_id = atoi(token); break;
                 case 1: o.order_id = atoi(token); break;
@@ -40,6 +47,7 @@ struct order* read_csv(const char* filename, int* size) {
                 case 10: strncpy(o.pizza_ingredients, token, sizeof(o.pizza_ingredients)); break;
                 case 11: strncpy(o.pizza_name, token, sizeof(o.pizza_name)); break;
             }
+
             token = strtok(NULL, ",");
             field++;
         }

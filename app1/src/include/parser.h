@@ -10,9 +10,9 @@ struct order {
     char order_time[20];
     float unit_price;
     float total_price;
-    char pizza_size[5];
+    char pizza_size[10];           // antes 5
     char pizza_category[50];
-    char pizza_ingredients[200];
+    char pizza_ingredients[300];   // antes 200
     char pizza_name[100];
 };
 

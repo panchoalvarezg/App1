@@ -29,7 +29,27 @@ char* pms(int *size, struct order *orders) {
 
 ####
 
-#pls: Pizza menos vendida
+// Función de utilidad para encontrar la pizza menos vendida
+char* pls(int *size, struct order *orders) {
+    // Contar la frecuencia de cada tipo de pizza
+    int min_count = INT_MAX;
+    char* least_sold_pizza = NULL;
+    for (int i = 0; i < *size; ++i) {
+        int count = 0;
+        for (int j = 0; j < *size; ++j) {
+            if (strcmp(orders[i].pizza_name, orders[j].pizza_name) == 0) {
+                count += orders[j].quantity;
+            }
+        }
+        if (count < min_count) {
+            min_count = count;
+            least_sold_pizza = orders[i].pizza_name;
+        }
+    }
+    char *result = malloc(64);
+    snprintf(result, 64, "Pizza menos vendida: %s", least_sold_pizza);
+    return result;
+}
 
 ####
 char* dms(int *size, struct order *orders) {

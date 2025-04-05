@@ -231,11 +231,7 @@ char* hp(int *size, struct order *orders) {
 
 // Función para obtener la métrica correspondiente
 metric_func get_metric(const char *name) {
-    if (strcmp(name, "total_sales") == 0) {
-        return total_sales;
-    } else if (strcmp(name, "total_orders") == 0) {
-        return total_orders;
-    } else if (strcmp(name, "pms") == 0) {
+    if (strcmp(name, "pms") == 0) {
         return pms;
     } else if (strcmp(name, "pls") == 0) {
         return pls;

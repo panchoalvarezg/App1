@@ -31,13 +31,6 @@ char* pms(int *size, struct order *orders) {
 
 
 
-// Función de utilidad para encontrar la pizza menos vendida
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <limits.h>
-#include "parser.h" // Asegúrate de incluir el archivo con la definición de struct order
-
 char* pls(int *size, struct order *orders) {
     int min_count = INT_MAX;
     char* least_sold_pizza = NULL;

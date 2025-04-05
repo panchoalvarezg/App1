@@ -69,8 +69,6 @@ char* dms(int *size, struct order *orders) {
 
 ####
 
-
-
 char* dls(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
         return strdup("No se encontraron ventas.");
@@ -88,13 +86,17 @@ char* dls(int *size, struct order *orders) {
             }
         }
 
-        // Imprimir ventas y fecha actual
+        // Imprimir ventas y fecha actual para depuración
         printf("Fecha: %s, Ventas: %.2f\n", orders[i].order_date, sales);
 
         if (sales < min_sales) {
             min_sales = sales;
             free(min_sales_date);
             min_sales_date = strdup(orders[i].order_date);
+            if (min_sales_date == NULL) {
+                fprintf(stderr, "Error duplicating date string\n");
+                return NULL;
+            }
         }
     }
 
@@ -137,23 +139,7 @@ char* dmsp(int *size, struct order *orders) {
 
 ####
 
-int read_orders_from_csv(const char *filename, struct order *orders, int max_orders) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        perror("Error opening file");
-        return -1;
-    }
 
-    int size = 0;
-    char line[256];
-    while (fgets(line, sizeof(line), file) && size < max_orders) {
-        if (sscanf(line, "%10[^,],%d", orders[size].order_date, &orders[size].quantity) == 2) {
-            size++;
-        }
-    }
-    fclose(file);
-    return size;
-}
 
 char* dlsp(int *size, struct order *orders) {
     int min_pizzas = INT_MAX;
@@ -167,7 +153,7 @@ char* dlsp(int *size, struct order *orders) {
             }
         }
 
-        // Imprimir cantidad de pizzas y fecha actual
+        // Imprimir cantidad de pizzas y fecha actual para depuración
         printf("Fecha: %s, Pizzas: %d\n", orders[i].order_date, pizzas);
 
         if (pizzas < min_pizzas) {

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.h"
-#include "metrics.h"
+#include "include/parser.h"
+#include "include/metrics.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {

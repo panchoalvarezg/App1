@@ -1,6 +1,18 @@
 #ifndef METRICS_H
 #define METRICS_H
+
 #include "parser.h"
+#include <stdlib.h> // Para malloc y free
+
+// Estructura de las órdenes
+struct order {
+    char order_date[11]; // Formato "YYYY-MM-DD"
+    float total_price;
+    int quantity;
+    char pizza_name[50];
+    char pizza_ingredients[100];
+    char pizza_category[20];
+};
 
 typedef char* (*metric_func)(int *size, struct order *orders);
 metric_func get_metric(const char *name);
@@ -17,4 +29,4 @@ char* apd(int *size, struct order *orders);
 char* ims(int *size, struct order *orders);
 char* hp(int *size, struct order *orders);
 
-#endif
+#endif // METRICS_H

@@ -69,7 +69,6 @@ char* dms(int *size, struct order *orders) {
 
 ####
 
-// Funciion dls para encontrar la fecha con menos pizzas vendidas en términos de dinero
 char* dls(int *size, struct order *orders) {
     // Sumar las ventas por fecha
     float min_sales = FLT_MAX;
@@ -86,11 +85,8 @@ char* dls(int *size, struct order *orders) {
         // Actualizar la fecha con menos ventas si las ventas actuales son menores que el mínimo registrado
         if (sales < min_sales) {
             min_sales = sales;
-            // Liberar la memoria previamente asignada a min_sales_date
-            if (min_sales_date != NULL) {
-                free(min_sales_date);
-            }
             // Duplicar la cadena de la fecha con menos ventas
+            free(min_sales_date); // Liberar la memoria previamente asignada a min_sales_date
             min_sales_date = strdup(orders[i].order_date);
         }
     }
@@ -112,7 +108,6 @@ char* dls(int *size, struct order *orders) {
     free(min_sales_date);
     return result;
 }
-
 ####
 // Función de utilidad para encontrar la fecha con más ventas en términos de cantidad de pizzas
 char* dmsp(int *size, struct order *orders) {

@@ -140,10 +140,18 @@ char* dmsp(int *size, struct order *orders) {
 ####
 
 
+struct order {
+    char order_date[20];
+    char pizza_name[50];
+    int quantity;
+    float total_price;
+};
 
+// Función para encontrar la fecha con menos ventas en términos de cantidad de pizzas
 char* dlsp(int *size, struct order *orders) {
     int min_pizzas = INT_MAX;
-    char* min_pizzas_date = NULL;
+    char** min_pizzas_dates = NULL;
+    int min_dates_count = 0;
 
     for (int i = 0; i < *size; ++i) {
         int pizzas = 0;
@@ -158,28 +166,55 @@ char* dlsp(int *size, struct order *orders) {
 
         if (pizzas < min_pizzas) {
             min_pizzas = pizzas;
-            if (min_pizzas_date != NULL) {
-                free(min_pizzas_date);
+
+            // Liberar memoria anterior y actualizar la lista de fechas
+            if (min_pizzas_dates != NULL) {
+                for (int k = 0; k < min_dates_count; ++k) {
+                    free(min_pizzas_dates[k]);
+                }
+                free(min_pizzas_dates);
             }
-            min_pizzas_date = strdup(orders[i].order_date);
-            if (min_pizzas_date == NULL) {
-                fprintf(stderr, "Error duplicating date string\n");
-                return NULL;
-            }
+
+            min_pizzas_dates = malloc(sizeof(char*));
+            min_pizzas_dates[0] = strdup(orders[i].order_date);
+            min_dates_count = 1;
+        } else if (pizzas == min_pizzas) {
+            // Agregar la fecha a la lista en caso de empate
+            min_pizzas_dates = realloc(min_pizzas_dates, (min_dates_count + 1) * sizeof(char*));
+            min_pizzas_dates[min_dates_count] = strdup(orders[i].order_date);
+            min_dates_count++;
         }
     }
 
-    if (min_pizzas_date == NULL) {
+    if (min_dates_count == 0) {
         return strdup("No se encontraron ventas.");
     }
 
-    char *result = malloc(64);
+    // Crear el resultado
+    size_t result_size = 64 + (min_dates_count * 20);
+    char *result = malloc(result_size);
     if (result == NULL) {
-        free(min_pizzas_date);
+        for (int k = 0; k < min_dates_count; ++k) {
+            free(min_pizzas_dates[k]);
+        }
+        free(min_pizzas_dates);
         return NULL;
     }
-    snprintf(result, 64, "Fecha con menos pizzas vendidas: %s", min_pizzas_date);
-    free(min_pizzas_date);
+
+    snprintf(result, result_size, "Fecha(s) con menos pizzas vendidas: ");
+    for (int k = 0; k < min_dates_count; ++k) {
+        strncat(result, min_pizzas_dates[k], 20);
+        if (k < min_dates_count - 1) {
+            strncat(result, ", ", 2);
+        }
+    }
+
+    // Liberar memoria
+    for (int k = 0; k < min_dates_count; ++k) {
+        free(min_pizzas_dates[k]);
+    }
+    free(min_pizzas_dates);
+
     return result;
 }
 

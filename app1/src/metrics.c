@@ -30,27 +30,47 @@ char* pms(int *size, struct order *orders) {
 ####
 
 // Función de utilidad para encontrar la pizza menos vendida
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include "parser.h" // Asegúrate de incluir el archivo con la definición de struct order
+
 char* pls(int *size, struct order *orders) {
-    // Contar la frecuencia de cada tipo de pizza
     int min_count = INT_MAX;
     char* least_sold_pizza = NULL;
+
     for (int i = 0; i < *size; ++i) {
+        // Evitar contar dos veces la misma pizza
+        int ya_contada = 0;
+        for (int k = 0; k < i; ++k) {
+            if (strcmp(orders[i].pizza_name, orders[k].pizza_name) == 0) {
+                ya_contada = 1;
+                break;
+            }
+        }
+        if (ya_contada) continue;
+
+        // Contar cuántas veces se vendió esta pizza
         int count = 0;
         for (int j = 0; j < *size; ++j) {
             if (strcmp(orders[i].pizza_name, orders[j].pizza_name) == 0) {
                 count += orders[j].quantity;
             }
         }
-        printf("Pizza: %s, Cantidad: %d\n", orders[i].pizza_name, count); // Debugging line
+
         if (count < min_count) {
             min_count = count;
             least_sold_pizza = orders[i].pizza_name;
         }
     }
-    char *result = malloc(64);
-    snprintf(result, 64, "Pizza menos vendida: %s", least_sold_pizza);
+
+    char *result = malloc(128);
+    snprintf(result, 128, "Pizza menos vendida: %s (%d ventas)", least_sold_pizza, min_count);
     return result;
 }
+printf("%s\n", pls(&order_count, orders));
+
 
 ####
 char* dms(int *size, struct order *orders) {

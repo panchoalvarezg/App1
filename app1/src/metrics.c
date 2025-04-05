@@ -27,28 +27,40 @@ char* pms(int *size, struct order *orders) {
     return result;
 }
 
-// Función de utilidad para encontrar la pizza menos vendida
-char* pls(int *size, struct order *orders) {
-    // Contar la frecuencia de cada tipo de pizza
-    int min_count = INT_MAX;
-    char* least_sold_pizza = NULL;
+####
+char* dls(int *size, struct order *orders) {
+    // Sumar las ventas por fecha
+    float min_sales = FLT_MAX;
+    char* min_sales_date = NULL;
     for (int i = 0; i < *size; ++i) {
-        int count = 0;
+        float sales = 0.0f;
         for (int j = 0; j < *size; ++j) {
-            if (strcmp(orders[i].pizza_name, orders[j].pizza_name) == 0) {
-                count += orders[j].quantity;
+            if (strcmp(orders[i].order_date, orders[j].order_date) == 0) {
+                sales += orders[j].total_price;
             }
         }
-        if (count < min_count) {
-            min_count = count;
-            least_sold_pizza = orders[i].pizza_name;
+        if (sales < min_sales) {
+            min_sales = sales;
+            min_sales_date = orders[i].order_date;
         }
     }
+
+    // Verificar si se encontró alguna fecha con ventas
+    if (min_sales_date == NULL) {
+        return strdup("No se encontraron ventas.");
+    }
+
+    // Reservar memoria para el resultado y formatear la cadena de salida
     char *result = malloc(64);
-    snprintf(result, 64, "Pizza menos vendida: %s", least_sold_pizza);
+    if (result == NULL) {
+        // Manejar el error de asignación de memoria
+        return NULL;
+    }
+    snprintf(result, 64, "Fecha con menos ventas: %s", min_sales_date);
     return result;
 }
 
+####
 char* dms(int *size, struct order *orders) {
     // Sumar las ventas por fecha
     float max_sales = 0.0f;

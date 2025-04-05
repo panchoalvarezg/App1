@@ -39,6 +39,10 @@ char* pls(int *size, struct order *orders) {
     char** nombres_contados = malloc((*size) * sizeof(char*));
     int nombres_guardados = 0;
 
+    if (nombres_contados == NULL) {
+        return strdup("Error al asignar memoria.");
+    }
+
     for (int i = 0; i < *size; ++i) {
         // Saltar si ya contamos esta pizza
         if (pizza_name_ya_contada(orders[i].pizza_name, nombres_contados, nombres_guardados)) {
@@ -47,6 +51,13 @@ char* pls(int *size, struct order *orders) {
 
         // Guardar esta pizza como contada
         nombres_contados[nombres_guardados++] = strdup(orders[i].pizza_name);
+        if (nombres_contados[nombres_guardados - 1] == NULL) {
+            for (int k = 0; k < nombres_guardados - 1; ++k) {
+                free(nombres_contados[k]);
+            }
+            free(nombres_contados);
+            return strdup("Error al duplicar el nombre de la pizza.");
+        }
 
         int count = 0;
         for (int j = 0; j < *size; ++j) {
@@ -59,6 +70,13 @@ char* pls(int *size, struct order *orders) {
             min_count = count;
             if (least_sold_pizza != NULL) free(least_sold_pizza);
             least_sold_pizza = strdup(orders[i].pizza_name);
+            if (least_sold_pizza == NULL) {
+                for (int k = 0; k < nombres_guardados; ++k) {
+                    free(nombres_contados[k]);
+                }
+                free(nombres_contados);
+                return strdup("Error al duplicar el nombre de la pizza menos vendida.");
+            }
         }
     }
 
@@ -70,6 +88,10 @@ char* pls(int *size, struct order *orders) {
     if (least_sold_pizza == NULL) return strdup("No se encontró la pizza menos vendida.");
 
     char *result = malloc(128);
+    if (result == NULL) {
+        free(least_sold_pizza);
+        return strdup("Error al asignar memoria para el resultado.");
+    }
     snprintf(result, 128, "Pizza menos vendida: %s (%d ventas)", least_sold_pizza, min_count);
     free(least_sold_pizza);
     return result;
@@ -216,12 +238,34 @@ char* dlsp(int *size, struct order *orders) {
             }
 
             min_pizzas_dates = malloc(sizeof(char*));
+            if (min_pizzas_dates == NULL) {
+                return strdup("Error al asignar memoria para las fechas.");
+            }
             min_pizzas_dates[0] = strdup(orders[i].order_date);
+            if (min_pizzas_dates[0] == NULL) {
+                free(min_pizzas_dates);
+                return strdup("Error al duplicar la fecha.");
+            }
             min_dates_count = 1;
         } else if (pizzas == min_pizzas) {
             // Agregar la fecha a la lista en caso de empate
-            min_pizzas_dates = realloc(min_pizzas_dates, (min_dates_count + 1) * sizeof(char*));
+            char** temp = realloc(min_pizzas_dates, (min_dates_count + 1) * sizeof(char*));
+            if (temp == NULL) {
+                for (int k = 0; k < min_dates_count; ++k) {
+                    free(min_pizzas_dates[k]);
+                }
+                free(min_pizzas_dates);
+                return strdup("Error al reasignar memoria para las fechas.");
+            }
+            min_pizzas_dates = temp;
             min_pizzas_dates[min_dates_count] = strdup(orders[i].order_date);
+            if (min_pizzas_dates[min_dates_count] == NULL) {
+                for (int k = 0; k < min_dates_count; ++k) {
+                    free(min_pizzas_dates[k]);
+                }
+                free(min_pizzas_dates);
+                return strdup("Error al duplicar la fecha.");
+            }
             min_dates_count++;
         }
     }
@@ -238,7 +282,7 @@ char* dlsp(int *size, struct order *orders) {
             free(min_pizzas_dates[k]);
         }
         free(min_pizzas_dates);
-        return NULL;
+        return strdup("Error al asignar memoria para el resultado.");
     }
 
     snprintf(result, result_size, "Fecha(s) con menos pizzas vendidas: ");

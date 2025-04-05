@@ -73,10 +73,9 @@ char* dms(int *size, struct order *orders) {
 
 char* dls(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
-        return strdup("No se encontraron ventas."); // Handle empty or null orders
+        return strdup("No se encontraron ventas.");
     }
 
-    // Sumar las ventas por fecha
     float min_sales = FLT_MAX;
     char* min_sales_date = NULL;
 
@@ -84,36 +83,31 @@ char* dls(int *size, struct order *orders) {
         float sales = 0.0f;
 
         for (int j = 0; j < *size; ++j) {
-            // Comparar las fechas de las órdenes
             if (strcmp(orders[i].order_date, orders[j].order_date) == 0) {
-                // Sumar el precio total de las órdenes con la misma fecha
                 sales += orders[j].total_price;
             }
         }
 
-        // Actualizar la fecha con menos ventas si las ventas actuales son menores que el mínimo registrado
+        // Imprimir ventas y fecha actual
+        printf("Fecha: %s, Ventas: %.2f\n", orders[i].order_date, sales);
+
         if (sales < min_sales) {
             min_sales = sales;
-            // Duplicar la cadena de la fecha con menos ventas
-            free(min_sales_date); // Liberar la memoria previamente asignada a min_sales_date
+            free(min_sales_date);
             min_sales_date = strdup(orders[i].order_date);
         }
     }
 
-    // Verificar si se encontró alguna fecha con ventas
     if (min_sales_date == NULL) {
         return strdup("No se encontraron ventas.");
     }
 
-    // Reservar memoria para el resultado y formatear la cadena de salida
     char *result = malloc(64);
     if (result == NULL) {
-        // Manejar el error de asignación de memoria
         free(min_sales_date);
         return NULL;
     }
     snprintf(result, 64, "Fecha con menos ventas: %s", min_sales_date);
-    // Liberar la memoria asignada a min_sales_date
     free(min_sales_date);
     return result;
 }
@@ -172,6 +166,10 @@ char* dlsp(int *size, struct order *orders) {
                 pizzas += orders[j].quantity;
             }
         }
+
+        // Imprimir cantidad de pizzas y fecha actual
+        printf("Fecha: %s, Pizzas: %d\n", orders[i].order_date, pizzas);
+
         if (pizzas < min_pizzas) {
             min_pizzas = pizzas;
             if (min_pizzas_date != NULL) {
@@ -199,33 +197,6 @@ char* dlsp(int *size, struct order *orders) {
     return result;
 }
 
-int main(int argc, char *argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "Usage: %s <file> <command>\n", argv[0]);
-        return 1;
-    }
-
-    struct order orders[1000]; // Ajusta el tamaño según sea necesario
-    int size = read_orders_from_csv(argv[1], orders, 1000);
-    if (size == -1) {
-        return 1;
-    }
-
-    if (strcmp(argv[2], "dlsp") == 0) {
-        char *result = dlsp(&size, orders);
-        if (result != NULL) {
-            printf("%s\n", result);
-            free(result);
-        } else {
-            fprintf(stderr, "Error in dlsp function\n");
-        }
-    } else {
-        fprintf(stderr, "Unknown command: %s\n", argv[2]);
-        return 1;
-    }
-
-    return 0;
-}
 ####
 // Función de utilidad para calcular el promedio de pizzas por orden
 char* apo(int *size, struct order *orders) {

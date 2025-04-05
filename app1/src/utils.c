@@ -1,6 +1,6 @@
 // utils.c
 #include <ctype.h>
-#include "utils.h"
+#include "src/utils.h"
 
 void to_lower(char *str) {
     while (*str) {

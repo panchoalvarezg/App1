@@ -90,6 +90,7 @@ char* dms(int *size, struct order *orders) {
 
 ####
 
+// Función de utilidad para encontrar la fecha con menos ventas
 char* dls(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
         return strdup("No se encontraron ventas.");
@@ -159,14 +160,6 @@ char* dmsp(int *size, struct order *orders) {
 }
 
 ####
-
-
-struct order {
-    char order_date[20];
-    char pizza_name[50];
-    int quantity;
-    float total_price;
-};
 
 // Función para encontrar la fecha con menos ventas en términos de cantidad de pizzas
 char* dlsp(int *size, struct order *orders) {

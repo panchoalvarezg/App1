@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "metrics.h"
+#include "inlude/metrics.h"
 
 char* total_sales(int *size, struct order *orders) {
     float total = 0.0f;

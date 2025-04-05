@@ -1,19 +1,18 @@
 CC = gcc
-CFLAGS = -Iinclude
+CFLAGS = -Wall -Wextra -Werror -std=c11
+TARGET = app1
+SRCS = src/main.c src/metrics.c src/parser.c
+OBJS = $(SRCS:.c=.o)
 
-all: app1
+all: $(TARGET)
 
-app1: src/main.o src/parser.o src/metrics.o
-	$(CC) -o app1 src/main.o src/parser.o src/metrics.o
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-src/main.o: src/main.c
-	$(CC) $(CFLAGS) -c src/main.c -o src/main.o
-
-src/parser.o: src/parser.c
-	$(CC) $(CFLAGS) -c src/parser.c -o src/parser.o
-
-src/metrics.o: src/metrics.c
-	$(CC) $(CFLAGS) -c src/metrics.c -o src/metrics.o
+%.o: %.c
+	$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 
 clean:
-	rm -f app1 src/*.o
+	rm -f $(OBJS) $(TARGET)
+
+.PHONY: all clean

@@ -27,7 +27,7 @@ char* pms(int *size, struct order *orders) {
     return result;
 }
 
-####
+
 
 // Función de utilidad para encontrar la pizza menos vendida
 #include <stdio.h>
@@ -72,7 +72,7 @@ char* pls(int *size, struct order *orders) {
 printf("%s\n", pls(&order_count, orders));
 
 
-####
+
 char* dms(int *size, struct order *orders) {
     // Sumar las ventas por fecha
     float max_sales = 0.0f;
@@ -108,7 +108,7 @@ char* dms(int *size, struct order *orders) {
     return result;
 }
 
-####
+
 
 // Función de utilidad para encontrar la fecha con menos ventas
 char* dls(int *size, struct order *orders) {
@@ -156,7 +156,7 @@ char* dls(int *size, struct order *orders) {
     return result;
 }
 
-####
+
 // Función de utilidad para encontrar la fecha con más ventas en términos de cantidad de pizzas
 char* dmsp(int *size, struct order *orders) {
     // Contar la cantidad total de pizzas vendidas por fecha
@@ -179,7 +179,7 @@ char* dmsp(int *size, struct order *orders) {
     return result;
 }
 
-####
+
 
 // Función para encontrar la fecha con menos ventas en términos de cantidad de pizzas
 char* dlsp(int *size, struct order *orders) {
@@ -252,7 +252,8 @@ char* dlsp(int *size, struct order *orders) {
     return result;
 }
 
-####
+
+
 // Función de utilidad para calcular el promedio de pizzas por orden
 char* apo(int *size, struct order *orders) {
     float total_pizzas = 0.0f;
@@ -286,6 +287,8 @@ char* apd(int *size, struct order *orders) {
     return result;
 }
 
+
+
 // Función de utilidad para encontrar el ingrediente más vendido
 char* ims(int *size, struct order *orders) {
     // Contar la frecuencia de cada ingrediente
@@ -312,6 +315,8 @@ char* ims(int *size, struct order *orders) {
     return result;
 }
 
+
+
 // Función de utilidad para calcular la cantidad de pizzas por categoría vendidas
 char* hp(int *size, struct order *orders) {
     // Contar la cantidad total de pizzas vendidas por categoría
@@ -328,6 +333,8 @@ char* hp(int *size, struct order *orders) {
     snprintf(result, 128, "Cantidad de pizzas vendidas por categoría:\nClassic: %d\nVeggie: %d", classic_count, veggie_count);
     return result;
 }
+
+
 
 // Función para obtener la métrica correspondiente
 metric_func get_metric(const char *name) {

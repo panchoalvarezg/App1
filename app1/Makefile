@@ -1,9 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
-OBJS = main.o parser.o metrics.o utils.o
+CFLAGS = -Iinclude
 
-app1: $(OBJS)
-	$(CC) $(CFLAGS) -o app1 $(OBJS)
+all: app1
+
+app1: src/main.o src/parser.o src/metrics.o
+    $(CC) -o app1 src/main.o src/parser.o src/metrics.o
+
+src/main.o: src/main.c
+    $(CC) $(CFLAGS) -c src/main.c -o src/main.o
+
+src/parser.o: src/parser.c
+    $(CC) $(CFLAGS) -c src/parser.c -o src/parser.o
+
+src/metrics.o: src/metrics.c
+    $(CC) $(CFLAGS) -c src/metrics.c -o src/metrics.o
 
 clean:
-	rm -f *.o app1
+    rm -f app1 src/*.o

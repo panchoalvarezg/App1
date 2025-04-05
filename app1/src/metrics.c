@@ -49,7 +49,6 @@ char* pls(int *size, struct order *orders) {
     return result;
 }
 
-// Función de utilidad para encontrar la fecha con más ventas en términos de dinero
 char* dms(int *size, struct order *orders) {
     // Sumar las ventas por fecha
     float max_sales = 0.0f;
@@ -57,16 +56,30 @@ char* dms(int *size, struct order *orders) {
     for (int i = 0; i < *size; ++i) {
         float sales = 0.0f;
         for (int j = 0; j < *size; ++j) {
+            // Comparar las fechas de las órdenes
             if (strcmp(orders[i].order_date, orders[j].order_date) == 0) {
+                // Sumar el precio total de las órdenes con la misma fecha
                 sales += orders[j].total_price;
             }
         }
+        // Actualizar la fecha con más ventas si las ventas actuales son mayores que el máximo registrado
         if (sales > max_sales) {
             max_sales = sales;
             max_sales_date = orders[i].order_date;
         }
     }
+
+    // Verificar si se encontró alguna fecha con ventas
+    if (max_sales_date == NULL) {
+        return strdup("No se encontraron ventas.");
+    }
+
+    // Reservar memoria para el resultado y formatear la cadena de salida
     char *result = malloc(64);
+    if (result == NULL) {
+        // Manejar el error de asignación de memoria
+        return NULL;
+    }
     snprintf(result, 64, "Fecha con más ventas: %s", max_sales_date);
     return result;
 }

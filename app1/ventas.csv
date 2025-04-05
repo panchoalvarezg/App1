@@ -2,15 +2,3 @@ pizza_id,order_id,pizza_name_id,quantity,order_date,order_time,unit_price,total_
 1.00,1.00,hawaiian_m,1.00,1/1/2015,11:38:36,13.25,13.25,M,Classic,"Sliced Ham, Pineapple, Mozzarella Cheese",The Hawaiian Pizza
 2.00,2.00,classic_dlx_m,1.00,1/1/2015,11:57:40,16.00,16.00,M,Classic,"Pepperoni, Mushrooms, Red Onions, Red Peppers, Bacon",The Classic Deluxe Pizza
 3.00,2.00,five_cheese_l,1.00,1/1/2015,11:57:40,18.50,18.50,L,Veggie,"Mozzarella Cheese, Provolone Cheese, Smoked Gouda Cheese, Romano Cheese, Blue Cheese, Garlic",The Five Cheese Pizza
-4.00,3.00,pepperoni_xl,2.00,2/1/2015,13:15:10,20.00,40.00,XL,Classic,"Pepperoni, Mozzarella Cheese",The XL Pepperoni Pizza
-5.00,3.00,veggie_supreme_s,3.00,2/1/2015,13:15:10,11.00,33.00,S,Veggie,"Green Peppers, Mushrooms, Onions, Tomatoes, Mozzarella Cheese",The Veggie Supreme Pizza
-6.00,4.00,bbq_ckn_m,1.00,3/1/2015,18:25:48,14.00,14.00,M,Chicken,"BBQ Sauce, Grilled Chicken, Onions, Mozzarella Cheese",The BBQ Chicken Pizza
-7.00,5.00,pepperoni_m,1.00,3/1/2015,19:00:05,13.00,13.00,M,Classic,"Pepperoni, Mozzarella Cheese",The Medium Pepperoni Pizza
-8.00,6.00,margherita_s,1.00,4/1/2015,12:45:30,10.50,10.50,S,Classic,"Tomato, Basil, Mozzarella Cheese",The Margherita Pizza
-9.00,7.00,five_cheese_l,2.00,5/1/2015,20:20:20,18.50,37.00,L,Veggie,"Mozzarella Cheese, Provolone Cheese, Smoked Gouda Cheese, Romano Cheese, Blue Cheese, Garlic",The Five Cheese Pizza
-10.00,8.00,classic_dlx_m,1.00,6/1/2015,14:12:00,16.00,16.00,M,Classic,"Pepperoni, Mushrooms, Red Onions, Red Peppers, Bacon",The Classic Deluxe Pizza
-11.00,8.00,hawaiian_l,2.00,6/1/2015,14:12:00,15.25,30.50,L,Classic,"Sliced Ham, Pineapple, Mozzarella Cheese",The Hawaiian Pizza
-12.00,9.00,veggie_supreme_m,2.00,7/1/2015,17:45:00,13.00,26.00,M,Veggie,"Green Peppers, Mushrooms, Onions, Tomatoes, Mozzarella Cheese",The Veggie Supreme Pizza
-13.00,10.00,bbq_ckn_m,1.00,7/1/2015,20:10:10,14.00,14.00,M,Chicken,"BBQ Sauce, Grilled Chicken, Onions, Mozzarella Cheese",The BBQ Chicken Pizza
-14.00,11.00,meat_lovers_xl,1.00,8/1/2015,21:30:30,21.00,21.00,XL,Meat,"Pepperoni, Sausage, Bacon, Ham, Mozzarella Cheese",The Meat Lovers Pizza
-15.00,12.00,veggie_supreme_l,1.00,8/1/2015,22:15:15,15.00,15.00,L,Veggie,"Green Peppers, Mushrooms, Onions, Tomatoes, Mozzarella Cheese",The Veggie Supreme Pizza

@@ -64,7 +64,7 @@ char* pls(int *size, struct order *orders) {
     snprintf(result, 128, "Pizza menos vendida: %s (%d ventas)", least_sold_pizza, min_count);
     return result;
 }
-printf("%s\n", pls(&order_count, orders));
+
 
 
 

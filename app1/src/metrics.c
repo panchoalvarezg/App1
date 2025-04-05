@@ -146,8 +146,8 @@ char* dmsp(int *size, struct order *orders) {
 }
 
 ####
+
 char* dlsp(int *size, struct order *orders) {
-    // Contar la cantidad total de pizzas vendidas por fecha
     int min_pizzas = INT_MAX;
     char* min_pizzas_date = NULL;
 
@@ -163,24 +163,25 @@ char* dlsp(int *size, struct order *orders) {
             if (min_pizzas_date != NULL) {
                 free(min_pizzas_date);
             }
-            min_pizzas_date = strdup(orders[i].order_date); // Duplicar la cadena de la fecha con menos ventas
+            min_pizzas_date = strdup(orders[i].order_date);
+            if (min_pizzas_date == NULL) {
+                fprintf(stderr, "Error duplicating date string\n");
+                return NULL;
+            }
         }
     }
 
-    // Verificar si se encontró alguna fecha con ventas
     if (min_pizzas_date == NULL) {
         return strdup("No se encontraron ventas.");
     }
 
-    // Reservar memoria para el resultado y formatear la cadena de salida
     char *result = malloc(64);
     if (result == NULL) {
-        // Manejar el error de asignación de memoria
         free(min_pizzas_date);
         return NULL;
     }
     snprintf(result, 64, "Fecha con menos pizzas vendidas: %s", min_pizzas_date);
-    free(min_pizzas_date); // Liberar la memoria asignada a min_pizzas_date
+    free(min_pizzas_date);
     return result;
 }
 

@@ -35,18 +35,19 @@ char* pls(int *size, struct order *orders) {
     int min_count = INT_MAX;
     char* least_sold_pizza = NULL;
 
-    for (int i = 0; i < *size; ++i) {
-        // Evitar contar dos veces la misma pizza
-        int ya_contada = 0;
-        for (int k = 0; k < i; ++k) {
-            if (strcmp(orders[i].pizza_name, orders[k].pizza_name) == 0) {
-                ya_contada = 1;
-                break;
-            }
-        }
-        if (ya_contada) continue;
+    // Lista para guardar nombres ya contados
+    char** nombres_contados = malloc((*size) * sizeof(char*));
+    int nombres_guardados = 0;
 
-        // Contar cuántas veces se vendió esta pizza
+    for (int i = 0; i < *size; ++i) {
+        // Saltar si ya contamos esta pizza
+        if (pizza_name_ya_contada(orders[i].pizza_name, nombres_contados, nombres_guardados)) {
+            continue;
+        }
+
+        // Guardar esta pizza como contada
+        nombres_contados[nombres_guardados++] = strdup(orders[i].pizza_name);
+
         int count = 0;
         for (int j = 0; j < *size; ++j) {
             if (strcmp(orders[i].pizza_name, orders[j].pizza_name) == 0) {
@@ -56,14 +57,24 @@ char* pls(int *size, struct order *orders) {
 
         if (count < min_count) {
             min_count = count;
-            least_sold_pizza = orders[i].pizza_name;
+            if (least_sold_pizza != NULL) free(least_sold_pizza);
+            least_sold_pizza = strdup(orders[i].pizza_name);
         }
     }
 
+    for (int i = 0; i < nombres_guardados; ++i) {
+        free(nombres_contados[i]);
+    }
+    free(nombres_contados);
+
+    if (least_sold_pizza == NULL) return strdup("No se encontró la pizza menos vendida.");
+
     char *result = malloc(128);
     snprintf(result, 128, "Pizza menos vendida: %s (%d ventas)", least_sold_pizza, min_count);
+    free(least_sold_pizza);
     return result;
 }
+
 
 
 

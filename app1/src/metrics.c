@@ -4,6 +4,8 @@
 #include <limits.h> // Para INT_MAX
 #include <float.h>  // Para FLT_MAX
 #include "include/metrics.h"
+#include "include/parser.h"
+
 
 // Función de utilidad para encontrar la pizza más vendida
 char* pms(int *size, struct order *orders) {

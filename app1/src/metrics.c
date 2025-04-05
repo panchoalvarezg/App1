@@ -69,11 +69,7 @@ char* dms(int *size, struct order *orders) {
 
 ####
 
-// Assuming the struct order is defined as follows:
-struct order {
-    char order_date[11]; // Format: YYYY-MM-DD
-    float total_price;
-};
+
 
 char* dls(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
@@ -147,6 +143,24 @@ char* dmsp(int *size, struct order *orders) {
 
 ####
 
+int read_orders_from_csv(const char *filename, struct order *orders, int max_orders) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        perror("Error opening file");
+        return -1;
+    }
+
+    int size = 0;
+    char line[256];
+    while (fgets(line, sizeof(line), file) && size < max_orders) {
+        if (sscanf(line, "%10[^,],%d", orders[size].order_date, &orders[size].quantity) == 2) {
+            size++;
+        }
+    }
+    fclose(file);
+    return size;
+}
+
 char* dlsp(int *size, struct order *orders) {
     int min_pizzas = INT_MAX;
     char* min_pizzas_date = NULL;
@@ -185,6 +199,33 @@ char* dlsp(int *size, struct order *orders) {
     return result;
 }
 
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s <file> <command>\n", argv[0]);
+        return 1;
+    }
+
+    struct order orders[1000]; // Ajusta el tamaño según sea necesario
+    int size = read_orders_from_csv(argv[1], orders, 1000);
+    if (size == -1) {
+        return 1;
+    }
+
+    if (strcmp(argv[2], "dlsp") == 0) {
+        char *result = dlsp(&size, orders);
+        if (result != NULL) {
+            printf("%s\n", result);
+            free(result);
+        } else {
+            fprintf(stderr, "Error in dlsp function\n");
+        }
+    } else {
+        fprintf(stderr, "Unknown command: %s\n", argv[2]);
+        return 1;
+    }
+
+    return 0;
+}
 ####
 // Función de utilidad para calcular el promedio de pizzas por orden
 char* apo(int *size, struct order *orders) {

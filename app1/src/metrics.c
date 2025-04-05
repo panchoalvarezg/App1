@@ -69,12 +69,24 @@ char* dms(int *size, struct order *orders) {
 
 ####
 
+// Assuming the struct order is defined as follows:
+struct order {
+    char order_date[11]; // Format: YYYY-MM-DD
+    float total_price;
+};
+
 char* dls(int *size, struct order *orders) {
+    if (*size <= 0 || orders == NULL) {
+        return strdup("No se encontraron ventas."); // Handle empty or null orders
+    }
+
     // Sumar las ventas por fecha
     float min_sales = FLT_MAX;
     char* min_sales_date = NULL;
+
     for (int i = 0; i < *size; ++i) {
         float sales = 0.0f;
+
         for (int j = 0; j < *size; ++j) {
             // Comparar las fechas de las órdenes
             if (strcmp(orders[i].order_date, orders[j].order_date) == 0) {
@@ -82,6 +94,7 @@ char* dls(int *size, struct order *orders) {
                 sales += orders[j].total_price;
             }
         }
+
         // Actualizar la fecha con menos ventas si las ventas actuales son menores que el mínimo registrado
         if (sales < min_sales) {
             min_sales = sales;
@@ -108,6 +121,7 @@ char* dls(int *size, struct order *orders) {
     free(min_sales_date);
     return result;
 }
+
 ####
 // Función de utilidad para encontrar la fecha con más ventas en términos de cantidad de pizzas
 char* dmsp(int *size, struct order *orders) {

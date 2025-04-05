@@ -2,14 +2,20 @@
 #define PARSER_H
 
 struct order {
-    char pizza_name[64];
-    char pizza_category[32];
-    char date[16];
-    char ingredients[256];
+    int pizza_id;
+    int order_id;
+    char pizza_name_id[50];
     int quantity;
+    char order_date[20];
+    char order_time[20];
+    float unit_price;
     float total_price;
+    char pizza_size[5];
+    char pizza_category[50];
+    char pizza_ingredients[200];
+    char pizza_name[100];
 };
 
-struct order *read_csv(const char *filename, int *numOrders);
+struct order* read_csv(const char* filename, int* size);
 
 #endif

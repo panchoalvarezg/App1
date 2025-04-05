@@ -3,24 +3,28 @@
 #include <string.h>
 #include "metrics.h"
 
-char *apo(int *size, struct order *orders) {
-    float totalPizzas = 0;
-    int totalOrders = 0;
-
-    for (int i = 0; i < *size; i++) {
-        totalPizzas += orders[i].quantity;
-        totalOrders++;
+char* total_sales(int *size, struct order *orders) {
+    float total = 0.0f;
+    for (int i = 0; i < *size; ++i) {
+        total += orders[i].total_price;
     }
+    char *result = malloc(64);
+    snprintf(result, 64, "Total de ventas: %.2f", total);
+    return result;
+}
 
-    float avg = totalPizzas / totalOrders;
-
-    char *result = malloc(128);
-    snprintf(result, 128, "Promedio de pizzas por orden: %.2f", avg);
+char* total_orders(int *size, struct order *orders) {
+    char *result = malloc(64);
+    snprintf(result, 64, "Total de órdenes: %d", *size);
     return result;
 }
 
 metric_func get_metric(const char *name) {
-    if (strcmp(name, "apo") == 0) return apo;
-    // Agregar más métricas aquí
-    return NULL;
+    if (strcmp(name, "total_sales") == 0) {
+        return total_sales;
+    } else if (strcmp(name, "total_orders") == 0) {
+        return total_orders;
+    } else {
+        return NULL;
+    }
 }

@@ -6,6 +6,16 @@
 #include "include/metrics.h"
 #include "include/parser.h"
 
+// metrics.c
+int pizza_name_ya_contada(const char *pizza_name, char **nombres_contados, int nombres_guardados) {
+    for (int i = 0; i < nombres_guardados; i++) {
+        if (strcmp(nombres_contados[i], pizza_name) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 char* pms(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
         return strdup("No hay órdenes disponibles.");

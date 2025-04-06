@@ -6,13 +6,6 @@
 #include "include/metrics.h"
 #include "include/parser.h"
 
-// metrics.c or another appropriate source file
-int pizza_name_ya_contada(const char *pizza_name, char **nombres_contados, int nombres_guardados) {
-    // Function implementation
-}
-
-// Función de utilidad para encontrar la pizza más vendida
-// Función de utilidad para encontrar la pizza con más ventas
 char* pms(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
         return strdup("No hay órdenes disponibles.");
@@ -119,8 +112,6 @@ char* pls(int *size, struct order *orders) {
     free(least_sold_pizza);
     return result;
 }
-
-
 
 
 

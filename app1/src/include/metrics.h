@@ -4,6 +4,7 @@
 #include "parser.h"
 #include <stdlib.h> // Para malloc y free
 
+int pizza_name_ya_contada(const char *pizza_name, char **nombres_contados, int nombres_guardados);
 
 typedef char* (*metric_func)(int *size, struct order *orders);
 metric_func get_metric(const char *name);

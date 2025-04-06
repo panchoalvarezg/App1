@@ -6,6 +6,10 @@
 #include "include/metrics.h"
 #include "include/parser.h"
 
+// metrics.c or another appropriate source file
+int pizza_name_ya_contada(const char *pizza_name, char **nombres_contados, int nombres_guardados) {
+    // Function implementation
+}
 
 // Función de utilidad para encontrar la pizza más vendida
 // Función de utilidad para encontrar la pizza con más ventas

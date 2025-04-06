@@ -8,13 +8,7 @@
 
 
 // Función de utilidad para encontrar la pizza más vendida
-// Estructura de orden
-struct order {
-    char pizza_name[50];
-    int quantity;
-};
-
-// Función de utilidad para encontrar la pizza más vendida
+// Función de utilidad para encontrar la pizza con más ventas
 char* pms(int *size, struct order *orders) {
     if (*size <= 0 || orders == NULL) {
         return strdup("No hay órdenes disponibles.");
@@ -50,12 +44,15 @@ char* pms(int *size, struct order *orders) {
     return result;
 }
 
-
+// Función de utilidad para encontrar la pizza con menos ventas
 char* pls(int *size, struct order *orders) {
+    if (*size <= 0 || orders == NULL) {
+        return strdup("No hay órdenes disponibles.");
+    }
+
+    // Contar la frecuencia de cada tipo de pizza
     int min_count = INT_MAX;
     char* least_sold_pizza = NULL;
-
-    // Lista para guardar nombres ya contados
     char** nombres_contados = malloc((*size) * sizeof(char*));
     int nombres_guardados = 0;
 
@@ -105,14 +102,16 @@ char* pls(int *size, struct order *orders) {
     }
     free(nombres_contados);
 
-    if (least_sold_pizza == NULL) return strdup("No se encontró la pizza menos vendida.");
+    if (least_sold_pizza == NULL) {
+        return strdup("No se encontró la pizza menos vendida.");
+    }
 
     char *result = malloc(128);
     if (result == NULL) {
         free(least_sold_pizza);
         return strdup("Error al asignar memoria para el resultado.");
     }
-    snprintf(result, 128, "Pizza menos vendida: %s (%d ventas)", least_sold_pizza, min_count);
+    snprintf(result, 128, "Pizza menos vendida: %s", least_sold_pizza);
     free(least_sold_pizza);
     return result;
 }
